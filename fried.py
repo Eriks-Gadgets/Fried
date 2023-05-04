@@ -59,7 +59,7 @@ while True:
         elif cutscene1_stage == -3:
             room.close()
             cutscene1_stage == -4
-            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-to-a-crisp.png")], [sg.Text("OH NO! You've burnt the hot dog! It's now a pile of ashes...")], [sg.Button("Continue")])
+            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-to-a-crisp.png")], [sg.Text("OH NO! You've burnt the hot dog! It's now a pile of ashes...")], [sg.Button("Continue")]])
         elif cutscene1_stage == -4:
             room.close()
             cutscene1_stage == -1
