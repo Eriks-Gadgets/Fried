@@ -58,11 +58,11 @@ while True:
             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room2.png")], [sg.Button("Fridge"),sg.Button("Grill")]])
         elif cutscene1_stage == -3:
             room.close()
-            cutscene1_stage == -4
+            cutscene1_stage = -4
             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-to-a-crisp.png")], [sg.Text("OH NO! You've burnt the hot dog! It's now a pile of ashes...")], [sg.Button("Continue")]])
         elif cutscene1_stage == -4:
             room.close()
-            cutscene1_stage == -1
+            cutscene1_stage = -1
             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-crisp.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")]])
     if event == "Grill":
         if hasHotDogs == False:
