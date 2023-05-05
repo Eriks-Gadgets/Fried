@@ -257,6 +257,11 @@ while True:
             room.close()
             cutscene1_stage = -2
             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room5-burnt.png")], [sg.Text("The Hot Dog has been cooked for " + str(values[1]) + " minutes."), sg.Button("Continue")]])
+        elif int(values[1]) < 0:
+            hotDogsState = "Frozen"
+            room.close
+            cutscne1_stage = 0
+            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="easter_egg_frozen.png")], [sg.Text("Well, if you want COLD Hot Dogs, don't put them on a grill. Put them in a freezer instead. Let's try this again now, shall we?"), sg.Button("Continue")]])
         else:
             crisp = True
             hotDogsState = "Burnt"
