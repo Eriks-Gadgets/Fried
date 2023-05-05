@@ -158,7 +158,7 @@ while True:
             if ketchupRequired == True and ketchup_style != 0 and hotDogsState != "Cooked":
                 if hotDogsState == "Burnt":
                     room.close()
-                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-burnt-with-toppings.png")], [sg.Text("Well, It's not BAD... It's not good either but it's not bad.")],[sg.Button("Continue")]])    
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-toppings-burnt.png")], [sg.Text("Well, It's not BAD... It's not good either but it's not bad.")],[sg.Button("Continue")]])    
                 if hotDogsState == "Raw":
                     room.close()
                     room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw-with-toppings.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")]])    
@@ -224,7 +224,7 @@ while True:
             if hotDogsState == "Burnt":
                 room.close()
                 ketchup_style = 1
-                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked-ketchup1.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
+                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-ketchup1.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
         else:
             if hotDogsState == "Raw":
                 room.close()
