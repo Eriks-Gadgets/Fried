@@ -101,7 +101,7 @@ while True:
                     room.close()
                     cutscene1_stage = -7
                     room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-burnt-2.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
-            elif ketchup_style == 1:
+            elif ketchup_style == 2:
                 if hotDogsState == "Raw":
                     room.close()
                     cutscene1_stage = -7
@@ -233,11 +233,11 @@ while True:
             if hotDogsState == "Cooked":
                 room.close()
                 ketchup_style = 2
-                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked-ketchup1.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
+                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked-ketchup2.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
             if hotDogsState == "Burnt":
                 room.close()
                 ketchup_style = 2
-                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-ketchup1.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
+                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-ketchup2.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
     if event == "Cook":
         if int(values[1]) < 10 and int(values[1]) > 0:
             hotDogsState = "Raw"
