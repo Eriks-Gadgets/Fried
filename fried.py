@@ -123,7 +123,7 @@ while True:
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")]])
                     if ketchup_style == 0:
                         room.close()
-                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-burnt-with-toppings.png")], [sg.Text("Well, It's not BAD... It's not good either but it's not bad.")],[sg.Button("Continue")]])    
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-toppings-burnt.png")], [sg.Text("Well, It's not BAD... It's not good either but it's not bad.")],[sg.Button("Continue")]])    
                 if hotDogsState == "Cooked":
                     if ketchup_style != 0:
                         room.close()
