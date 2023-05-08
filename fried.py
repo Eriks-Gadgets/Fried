@@ -6,7 +6,9 @@ try:
     import os 
 
     cutscene1_stage = 0
-
+    
+    frozen = 0
+    
     login = os.getlogin()
 
     import random
@@ -307,11 +309,19 @@ try:
                 room.close()
                 cutscene1_stage = -2
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room5-burnt.png")], [sg.Text("The Hot Dog has been cooked for " + str(values[1]) + " minutes."), sg.Button("Continue")]])
-            elif int(values[1]) < 0:
+            elif int(values[1]) <= 0:
                 hotDogsState = "Frozen"
-                room.close
+                room.close()
+                frozen += 1
                 cutscne1_stage = 0
-                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="easter_egg_frozen.png")], [sg.Text("Well, if you want COLD Hot Dogs, don't put them on a grill. Put them in a freezer instead. Let's try this again now, shall we?"), sg.Button("Continue")]])
+                print(frozen)
+                if frozen < 20:
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="easter_egg_frozen.png")], [sg.Text("Well, if you want COLD Hot Dogs, don't put them on a grill. Put them in a freezer instead. Let's try this again now, shall we?"), sg.Button("Continue")]])
+                elif frozen < 30:
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="easter_egg_too_many_hot_dogs.png")], [sg.Text("Stop it, there's too many hot dogs in the freezer."), sg.Button("Continue")]])
+                else:
+                    frozen = 0
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="freezer-hot-dog-explosion.png")], [sg.Text("OH GOD- THE FREEZER EXPLODED WITH HOT DOGS! I'll go replace this fridge with an identical copy."), sg.Button("Continue")]])
             else:
                 crisp = True
                 hotDogsState = "Burnt"
