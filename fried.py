@@ -16,12 +16,14 @@ try:
     all_ratings = []
 
     rating = 0
-
+    
+    money = 0
+    
     sg.theme("DarkTeal12") #Sets theme
 
     sg.Popup("Fried\n(c) 2023 Erik's Gadgets") #IP addition
 
-    room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("My Rating"), sg.Button("Continue")]])
+    room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("My Rating"), sg.Button("Continue")]])
 
     while True:
         event, values = room.Read()
@@ -29,7 +31,9 @@ try:
             break
         if event == "Return":
             room.close()
-            room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("My Rating"), sg.Button("Continue")]])
+            room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("My Rating"), sg.Button("Continue")]])
+        if event == "Money":
+            sg.Popup(f"Current Money:\n${money}.00")
         if event == "My Rating":
             room.close()
             mysum = 0
@@ -214,6 +218,7 @@ try:
                         room.close()
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw-with-toppings.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
                         all_ratings.append(2)
+                money += all_ratings[-1]
             elif cutscene1_stage == -7:
                 if ketchup_style == 0:
                     if hotDogsState == "Raw":
