@@ -17,13 +17,15 @@ try:
 
     rating = 0
     
+    multiplier = 1
+    
     money = 0
     
     sg.theme("DarkTeal12") #Sets theme
 
     sg.Popup("Fried\n(c) 2023 Erik's Gadgets") #IP addition
 
-    room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("My Rating"), sg.Button("Continue")]])
+    room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating"), sg.Button("Continue")]])
 
     while True:
         event, values = room.Read()
@@ -31,7 +33,18 @@ try:
             break
         if event == "Return":
             room.close()
-            room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("My Rating"), sg.Button("Continue")]])
+            room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating"), sg.Button("Continue")]])
+        if event == "Buy Rating Multiplier":
+            if money >= 5:
+                room.close()
+                money -= 5
+                multiplier += 1
+                room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Button("Return")]])
+            else:
+                sg.Popup("Not Enough Money")
+        if event == "Shop":
+            room.close()
+            room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Button("Return")]])
         if event == "Money":
             sg.Popup(f"Current Money:\n${money}.00")
         if event == "My Rating":
@@ -218,7 +231,7 @@ try:
                         room.close()
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw-with-toppings.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
                         all_ratings.append(2)
-                money += all_ratings[-1]
+                money += all_ratings[-1] * multiplier
             elif cutscene1_stage == -7:
                 if ketchup_style == 0:
                     if hotDogsState == "Raw":
