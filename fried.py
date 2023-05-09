@@ -20,6 +20,8 @@ try:
     all_ratings = []
 
     rating = 0
+
+    first_time = True
     
     multiplier = 1
     
@@ -38,7 +40,9 @@ try:
         if event == sg.WIN_CLOSED:
             break
         if event == "Return":
+            first_time = True
             room.close()
+            winsound.PlaySound("fried.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
             room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating"), sg.Button("Continue")]])
         if event == "Buy Rating Multiplier":
             if money >= 5:
@@ -82,12 +86,16 @@ try:
             else:
                 room = sg.Window(title="Fried", layout=[[sg.Image(filename="my-rating-none.png")], [sg.Text("Your Rating Is" + str(mysum2 / len(all_ratings)))],[sg.Button("Return")]])
         if event == "Start Tutorial":
-            winsound.PlaySound(None, winsound.SND_ASYNC)
+            if first_time == True:
+                winsound.PlaySound("fried-cooking.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
+                first_time = False
             room.close()
             cutscene1_stage = 1
             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room.png")], [sg.Text("Welcome to YOUR brand new resturaunt\nThis is the kitchen!"), sg.Button("Continue")]])
         if event == "Continue":
-            winsound.PlaySound(None, winsound.SND_ASYNC)
+            if first_time == True:
+                winsound.PlaySound("fried-cooking.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
+                first_time = False
             if cutscene1_stage == 1:
                 room.close()
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room.png")], [sg.Text("Let's buy a Fridge so that we have something to prevent the food from, well\nexpiring."), sg.Button("Continue")]])
@@ -365,6 +373,7 @@ try:
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3_no_hotdogs.png")], [sg.Text("We ran out hotdogs!"), sg.Button("Continue")]])
                 hasHotDogs = True
     room.close()
+    winsound.PlaySound(None, winsound.SND_ASYNC)
 except Exception as err:
     import PySimpleGUI as sg
     sg.Popup(err)
