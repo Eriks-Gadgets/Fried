@@ -1,10 +1,14 @@
+from threading import Thread
+from playsound import playsound
+
+
 try:
     #Fried
     #(c) 2023 Erik's Gadgets
 
     import PySimpleGUI as sg #Imports GUI Library
     import os 
-
+    import playsound
     cutscene1_stage = 0
     
     frozen = 0
@@ -26,7 +30,9 @@ try:
     sg.Popup("Fried\n(c) 2023 Erik's Gadgets") #IP addition
 
     room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating"), sg.Button("Continue")]])
-
+    import winsound
+    winsound.PlaySound("fried.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
+    
     while True:
         event, values = room.Read()
         if event == sg.WIN_CLOSED:
@@ -76,10 +82,12 @@ try:
             else:
                 room = sg.Window(title="Fried", layout=[[sg.Image(filename="my-rating-none.png")], [sg.Text("Your Rating Is" + str(mysum2 / len(all_ratings)))],[sg.Button("Return")]])
         if event == "Start Tutorial":
+            winsound.PlaySound(None, winsound.SND_ASYNC)
             room.close()
             cutscene1_stage = 1
             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room.png")], [sg.Text("Welcome to YOUR brand new resturaunt\nThis is the kitchen!"), sg.Button("Continue")]])
         if event == "Continue":
+            winsound.PlaySound(None, winsound.SND_ASYNC)
             if cutscene1_stage == 1:
                 room.close()
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room.png")], [sg.Text("Let's buy a Fridge so that we have something to prevent the food from, well\nexpiring."), sg.Button("Continue")]])
