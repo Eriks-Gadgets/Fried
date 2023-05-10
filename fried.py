@@ -1,5 +1,5 @@
 from threading import Thread
-from playsound import playsound
+#from playsound import playsound
 
 
 try:
@@ -8,7 +8,7 @@ try:
 
     import PySimpleGUI as sg #Imports GUI Library
     import os 
-    import playsound
+    #import playsound
     cutscene1_stage = 0
     
     frozen = 0
@@ -22,11 +22,21 @@ try:
     rating = 0
 
     first_time = True
+
+    file1 = open('save-file.txt', 'r')
     
-    multiplier = 1
+    save_r_list = []    
+        
+    for i in file1:
+        save_r_list.append(i.split())   
+
+    print(save_r_list)
     
-    money = 0
+    multiplier = int(save_r_list[1][0])
     
+    money = int(save_r_list[0][0])
+     
+
     sg.theme("DarkTeal12") #Sets theme
 
     sg.Popup("Fried\n(c) 2023 Erik's Gadgets") #IP addition
@@ -374,6 +384,12 @@ try:
                 hasHotDogs = True
     room.close()
     winsound.PlaySound(None, winsound.SND_ASYNC)
+    with open("save-file.txt",'r+') as file:
+        file.truncate(0)
+        file.write(str(money))
+        file.write("\n")
+        file.write(str(multiplier))
+
 except Exception as err:
     import PySimpleGUI as sg
     sg.Popup(err)
