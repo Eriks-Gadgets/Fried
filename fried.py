@@ -41,9 +41,13 @@ try:
         done_tutorial = False
     else:
         done_tutorial = True
+    
+    if save_r_list[3][0] == "False":
+        mustard = False
+    else:
+        mustard = True
 
     sg.theme("DarkTeal12") #Sets theme
-    print(done_tutorial)
     sg.Popup("Fried\n(c) 2023 Erik's Gadgets") #IP addition
     
     if done_tutorial == False:
@@ -62,9 +66,9 @@ try:
             room.close()
             winsound.PlaySound("fried.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
             if done_tutorial == False:
-                room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating")]])
+                room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Shop"), sg.Button("My Rating")]])
             else:
-                room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Continue"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating")]])
+                room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Continue"), sg.Button("Shop"), sg.Button("My Rating")]])
         if event == "Buy Rating Multiplier":
             if money >= 5:
                 room.close()
@@ -73,9 +77,17 @@ try:
                 room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Button("Return")]])
             else:
                 sg.Popup("Not Enough Money")
+        if event == "Buy Mustard":
+            if money >= 10:
+                room.close()
+                money -= 10
+                mustard = True
+                room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Button("Return")]])
+            else:
+                sg.Popup("Not Enough Money")
         if event == "Shop":
             room.close()
-            room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Button("Return")]])
+            room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Text("Mustard ($10.00)"), sg.Button("Buy Mustard")], [sg.Button("Return")]])
         if event == "Money":
             sg.Popup(f"Current Money:\n${money}.00")
         if event == "My Rating":
@@ -136,28 +148,49 @@ try:
                 hasHotDogs = False
                 hotDogsState = "Raw"
                 ketchup = False
-                orders = ["Hot Dog, Plain", "Hot Dog, with Ketchup"]
+                if mustard == False:
+                    orders = ["Hot Dog, Plain", "Hot Dog, with Ketchup"]
+                else:
+                    orders = ["Hot Dog, Plain", "Hot Dog, with Ketchup", "Hot Dog, with Mustard"]
                 random_num = random.randint(0,len(orders) - 1)
                 sg.Popup(orders[random_num])
+                ketchup_style = 0
+                mustard_style = 0
                 if random_num == 0:
                     ketchupRequired = False
+                    mustardRequired = False
                 elif random_num == 1:
+                    mustardRequired = False
                     ketchupRequired = True
+                elif random_num == 2:
+                    mustardRequired = True
+                    ketchupRequired = False
                 cutscene1_stage = -1
             elif cutscene1_stage == -1:
                 room.close()
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room2.png")], [sg.Button("Fridge"),sg.Button("Grill")]])
             elif cutscene1_stage == -2:
                 cutscene1_stage = -5
-                if hotDogsState == "Raw":
-                    room.close()
-                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-raw.png")], [sg.Button("Dress with Ketchup"),sg.Button("Continue")]])
-                elif hotDogsState == "Cooked":
-                    room.close()
-                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked.png")], [sg.Button("Dress with Ketchup"),sg.Button("Continue")]])
-                elif hotDogsState == "Burnt":
-                    room.close()
-                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt.png")], [sg.Button("Dress with Ketchup"),sg.Button("Continue")]])
+                if mustard == False:
+                    if hotDogsState == "Raw":
+                        room.close()
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-raw.png")], [sg.Button("Dress with Ketchup"),sg.Button("Continue")]])
+                    elif hotDogsState == "Cooked":
+                        room.close()
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked.png")], [sg.Button("Dress with Ketchup"),sg.Button("Continue")]])
+                    elif hotDogsState == "Burnt":
+                        room.close()
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt.png")], [sg.Button("Dress with Ketchup"),sg.Button("Continue")]])
+                elif mustard == True:
+                    if hotDogsState == "Raw":
+                        room.close()
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-raw.png")], [sg.Button("Dress with Ketchup"),sg.Button("Dress with Mustard"),sg.Button("Continue")]])
+                    elif hotDogsState == "Cooked":
+                        room.close()
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked.png")], [sg.Button("Dress with Ketchup"),sg.Button("Dress with Mustard"),sg.Button("Continue")]])
+                    elif hotDogsState == "Burnt":
+                        room.close()
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt.png")], [sg.Button("Dress with Ketchup"),sg.Button("Dress with Mustard"),sg.Button("Continue")]])
             elif cutscene1_stage == -3:
                 room.close()
                 cutscene1_stage = -4
@@ -208,9 +241,36 @@ try:
                         room.close()
                         cutscene1_stage = -7
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-burnt-3.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
+            elif cutscene1_stage == -10:
+                if mustard_style == 1:
+                    if hotDogsState == "Raw":
+                        room.close()
+                        cutscene1_stage = -7
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-raw-4.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Cooked":
+                        room.close()
+                        cutscene1_stage = -7
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-cooked-4.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Burnt":
+                        room.close()
+                        cutscene1_stage = -7
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-burnt-4.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
+                elif mustard_style == 2:
+                    if hotDogsState == "Raw":
+                        room.close()
+                        cutscene1_stage = -7
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-raw-5.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Cooked":
+                        room.close()
+                        cutscene1_stage = -7
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-cooked-5.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Burnt":
+                        room.close()
+                        cutscene1_stage = -7
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room7-burnt-5.png")], [sg.Text("Your Hot Dog is almost done!")],[sg.Button("Continue")]])
             elif cutscene1_stage == -8:
                 cutscene1_stage = 0
-                if ketchupRequired == False:
+                if ketchupRequired == False and mustardRequired == False:
                     if hotDogsState == "Burnt":
                         if ketchup_style != 0:
                             room.close()
@@ -238,7 +298,7 @@ try:
                             room.close()
                             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw-with-toppings.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
                             all_ratings.append(2)
-                if ketchupRequired == True and ketchup_style == 0:
+                if ketchupRequired == True or mustardRequired == True and ketchup_style == 0 or mustard_style == 0:
                     if hotDogsState == "Burnt":
                         room.close()
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
@@ -251,16 +311,26 @@ try:
                         room.close()
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
                         all_ratings.append(1)
-                if ketchupRequired == True and ketchup_style != 0 and hotDogsState == "Cooked":
+                if ketchupRequired == True or mustardRequired == True and ketchup_style != 0 and hotDogsState == "Cooked":
                     if ketchup_style == 2:
-                        room.close()
-                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-amazing-presentation.png")], [sg.Text("Great Job! All Five Stars!")],[sg.Button("Continue")], [sg.Button("Return")]])
-                        all_ratings.append(5)
+                        if mustardRequired == True and mustard_style == 0 or ketchupRequired == True and ketchup_style == 0:
+                            room.close()
+                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-wrong-topping.png")], [sg.Text("4 Stars! Pretty Good.")],[sg.Button("Continue")], [sg.Button("Return")]])
+                            all_ratings.append(4)
+                        else:
+                            room.close()
+                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-amazing-presentation.png")], [sg.Text("4 Stars! Pretty Good.")],[sg.Button("Continue")], [sg.Button("Return")]])
+                            all_ratings.append(4)
                     if ketchup_style == 1:
-                        room.close()
-                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-bad-presentation.png")], [sg.Text("4 Stars! Pretty Good.")],[sg.Button("Continue")], [sg.Button("Return")]])
-                        all_ratings.append(4)
-                if ketchupRequired == True and ketchup_style != 0 and hotDogsState != "Cooked":
+                        if mustardRequired == True and mustard_style == 0 or ketchupRequired == True and ketchup_style == 0:
+                            room.close()
+                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-wrong-topping.png")], [sg.Text("4 Stars! Pretty Good.")],[sg.Button("Continue")], [sg.Button("Return")]])
+                            all_ratings.append(4)
+                        else:
+                            room.close()
+                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-bad-presentation.png")], [sg.Text("4 Stars! Pretty Good.")],[sg.Button("Continue")], [sg.Button("Return")]])
+                            all_ratings.append(4)
+                if ketchupRequired == True or mustardRequired == True and ketchup_style != 0 and hotDogsState != "Cooked":
                     if hotDogsState == "Burnt":
                         room.close()
                         room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-toppings-burnt.png")], [sg.Text("Well, It's not BAD... It's not good either but it's not bad.")],[sg.Button("Continue")], [sg.Button("Return")]])
@@ -271,7 +341,7 @@ try:
                         all_ratings.append(2)
                 money += all_ratings[-1] * multiplier
             elif cutscene1_stage == -7:
-                if ketchup_style == 0:
+                if ketchup_style == 0 and mustard_style == 0:
                     if hotDogsState == "Raw":
                         room.close()
                         cutscene1_stage = -8
@@ -309,7 +379,33 @@ try:
                     if hotDogsState == "Burnt":
                         room.close()
                         cutscene1_stage = -8
-                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-burnt-3.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])        
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-burnt-3.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
+                elif mustard_style == 1:
+                    if hotDogsState == "Raw":
+                        room.close()
+                        cutscene1_stage = -8
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-raw-4.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Cooked":
+                        room.close()
+                        cutscene1_stage = -8
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-cooked-4.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Burnt":
+                        room.close()
+                        cutscene1_stage = -8
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-burnt-4.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
+                elif mustard_style == 2:
+                    if hotDogsState == "Raw":
+                        room.close()
+                        cutscene1_stage = -8
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-raw-5.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Cooked":
+                        room.close()
+                        cutscene1_stage = -8
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-cooked-5.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
+                    if hotDogsState == "Burnt":
+                        room.close()
+                        cutscene1_stage = -8
+                        room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room8-burnt-5.png")], [sg.Text("Your Hot Dog is Complete!\nNow let's see the review you got!")],[sg.Button("Continue")]])
         if event == "Grill":
             if hasHotDogs == False:
                 room.close()
@@ -346,6 +442,35 @@ try:
                     room.close()
                     ketchup_style = 2
                     room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-ketchup2.png")], [sg.Text("You have dressed the hot dog with ketchup."), sg.Button("Continue")]])
+        if event == "Dress with Mustard":
+            cutscene1_stage = -10
+            random_num = random.randint(1, 2)
+            if random_num == 1:
+                if hotDogsState == "Raw":
+                    room.close()
+                    mustard_style = 1
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-raw-mustard1.png")], [sg.Text("You have dressed the hot dog with mustard."), sg.Button("Continue")]])
+                if hotDogsState == "Cooked":
+                    room.close()
+                    mustard_style = 1
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked-mustard1.png")], [sg.Text("You have dressed the hot dog with mustard."), sg.Button("Continue")]])
+                if hotDogsState == "Burnt":
+                    room.close()
+                    mustard_style = 1
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-mustard1.png")], [sg.Text("You have dressed the hot dog with mustard."), sg.Button("Continue")]])
+            else:
+                if hotDogsState == "Raw":
+                    room.close()
+                    mustard_style = 2
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-raw-mustard2.png")], [sg.Text("You have dressed the hot dog with mustard."), sg.Button("Continue")]])
+                if hotDogsState == "Cooked":
+                    room.close()
+                    mustard_style = 2
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-cooked-mustard2.png")], [sg.Text("You have dressed the hot dog with mustard."), sg.Button("Continue")]])
+                if hotDogsState == "Burnt":
+                    room.close()
+                    mustard_style = 2
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room6-burnt-mustard2.png")], [sg.Text("You have dressed the hot dog with mustard."), sg.Button("Continue")]])
         if event == "Cook":
             if int(values[1]) < 10 and int(values[1]) > 0:
                 hotDogsState = "Raw"
@@ -386,14 +511,24 @@ try:
                 cutscene1_stage = -3
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room5-burnt.png")], [sg.Text("The Hot Dog has been cooked for " + str(values[1]) + " minutes."), sg.Button("Continue")]])
         if event == "Fridge":
-            if hasHotDogs == False:
-                room.close()
-                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3.png")], [sg.Text("Let's Grab some Hot Dogs."), sg.Button("Continue")]])
-                hasHotDogs = True
-            elif hasHotDogs == True:
-                room.close()
-                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3_no_hotdogs.png")], [sg.Text("We ran out hotdogs!"), sg.Button("Continue")]])
-                hasHotDogs = True
+            if mustard == False:
+                if hasHotDogs == False:
+                    room.close()
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3.png")], [sg.Text("Let's Grab some Hot Dogs."), sg.Button("Continue")]])
+                    hasHotDogs = True
+                elif hasHotDogs == True:
+                    room.close()
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3_no_hotdogs.png")], [sg.Text("We ran out hotdogs!"), sg.Button("Continue")]])
+                    hasHotDogs = True
+            else:
+                if hasHotDogs == False:
+                    room.close()
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3b.png")], [sg.Text("Let's Grab some Hot Dogs."), sg.Button("Continue")]])
+                    hasHotDogs = True
+                elif hasHotDogs == True:
+                    room.close()
+                    room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room3_no_hotdogsb.png")], [sg.Text("We ran out hotdogs!"), sg.Button("Continue")]])
+                    hasHotDogs = True
     room.close()
     winsound.PlaySound(None, winsound.SND_ASYNC)
     with open("save-file.txt",'r+') as file:
@@ -403,6 +538,8 @@ try:
         file.write(str(multiplier))
         file.write("\n")
         file.write(str(done_tutorial))
+        file.write("\n")
+        file.write(str(mustard))
 
 except Exception as err:
     import PySimpleGUI as sg
