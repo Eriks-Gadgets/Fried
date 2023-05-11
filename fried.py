@@ -82,7 +82,7 @@ try:
                 room.close()
                 money -= 10
                 mustard = True
-                room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Button("Return")]])
+                room = sg.Window(title="Fried", layout=[[sg.Text(f"Money: ${money}")],[sg.Text("Rating Multiplier ($5.00) [Increases Multiplier by +1]"), sg.Button("Buy Rating Multiplier")],[sg.Text(f"Multiplier is currently {multiplier}")], [sg.Text("Mustard ($10.00)"), sg.Button("Buy Mustard")], [sg.Button("Return")]])
             else:
                 sg.Popup("Not Enough Money")
         if event == "Shop":
