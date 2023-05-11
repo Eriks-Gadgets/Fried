@@ -20,7 +20,8 @@ try:
     all_ratings = []
 
     rating = 0
-
+    
+    
     first_time = True
 
     file1 = open('save-file.txt', 'r')
@@ -35,13 +36,20 @@ try:
     multiplier = int(save_r_list[1][0])
     
     money = int(save_r_list[0][0])
-     
+    
+    if save_r_list[2][0] == "False":
+        done_tutorial = False
+    else:
+        done_tutorial = True
 
     sg.theme("DarkTeal12") #Sets theme
-
+    print(done_tutorial)
     sg.Popup("Fried\n(c) 2023 Erik's Gadgets") #IP addition
-
-    room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating"), sg.Button("Continue")]])
+    
+    if done_tutorial == False:
+        room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating")]])
+    else:
+        room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Continue"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating")]])
     import winsound
     winsound.PlaySound("fried.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
     
@@ -53,7 +61,10 @@ try:
             first_time = True
             room.close()
             winsound.PlaySound("fried.wav", winsound.SND_ASYNC | winsound.SND_ALIAS )
-            room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating"), sg.Button("Continue")]])
+            if done_tutorial == False:
+                room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Start Tutorial"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating")]])
+            else:
+                room = sg.Window(title="Fried", layout=[[sg.Image(filename="fried_title_screen.png")], [sg.Button("Continue"), sg.Button("Money"), sg.Button("Shop"), sg.Button("My Rating")]])
         if event == "Buy Rating Multiplier":
             if money >= 5:
                 room.close()
@@ -117,6 +128,7 @@ try:
             elif cutscene1_stage == 3:
                 room.close()
                 room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="room2.png")], [sg.Text("Alright! Let's Begin Cooking!!"), sg.Button("Continue")]])
+                done_tutorial = True
                 cutscene1_stage = 0
             elif cutscene1_stage == 0:
                 room.close()
@@ -389,6 +401,8 @@ try:
         file.write(str(money))
         file.write("\n")
         file.write(str(multiplier))
+        file.write("\n")
+        file.write(str(done_tutorial))
 
 except Exception as err:
     import PySimpleGUI as sg
