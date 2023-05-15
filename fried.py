@@ -287,7 +287,7 @@ try:
                             all_ratings.append(4)
                         if ketchup_style == 0:
                             room.close()
-                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-amazing-presentation.png")], [sg.Text("")],[sg.Button("Continue")], [sg.Button("Return")]])
+                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-amazing-presentation.png")], [sg.Text("Great Job! All Five Stars!")],[sg.Button("Continue")], [sg.Button("Return")]])
                             all_ratings.append(5)
                     if hotDogsState == "Raw":
                         if ketchup_style != 0:
@@ -299,19 +299,60 @@ try:
                             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw-with-toppings.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
                             all_ratings.append(2)
                 if ketchupRequired == True or mustardRequired == True:
-                    if ketchup_style == 0 or mustard_style == 0:
-                        if hotDogsState == "Burnt":
-                            room.close()
-                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
-                            all_ratings.append(1)
-                        if hotDogsState == "Cooked":
-                            room.close()
-                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-cooked.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
-                            all_ratings.append(2)
-                        if hotDogsState == "Raw":
-                            room.close()
-                            room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
-                            all_ratings.append(1)
+                    if ketchupRequired == True:
+                        if mustard_style == 0 and ketchup_style == 0:
+                            if hotDogsState == "Burnt":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                            if hotDogsState == "Cooked":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-cooked.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(2)
+                            if hotDogsState == "Raw":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                        elif mustard_style != 0:
+                            if hotDogsState == "Burnt":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                            if hotDogsState == "Cooked":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-wrong-topping.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(2)
+                            if hotDogsState == "Raw":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                    elif mustardRequired == True:
+                        if ketchup_style == 0 and mustard_style == 0:
+                            if hotDogsState == "Burnt":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                            if hotDogsState == "Cooked":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-cooked.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(2)
+                            if hotDogsState == "Raw":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                        elif ketchup_style != 0:
+                            if hotDogsState == "Burnt":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-no-topping-burnt.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
+                            if hotDogsState == "Cooked":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-wrong-topping.png")], [sg.Text("Two Stars are better than None... I guess...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(2)
+                            if hotDogsState == "Raw":
+                                room.close()
+                                room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-raw.png")], [sg.Text("Oops... Maybe we should've done this some other way...")],[sg.Button("Continue")], [sg.Button("Return")]])
+                                all_ratings.append(1)
                 if ketchupRequired == True or mustardRequired == True and ketchup_style != 0 and hotDogsState == "Cooked":
                     if ketchup_style == 2:
                         if mustardRequired == True and mustard_style == 0 or ketchupRequired == True and ketchup_style == 0:
@@ -321,7 +362,7 @@ try:
                         else:
                             room.close()
                             room = sg.Window(title="Kitchen", layout=[[sg.Image(filename="review-cooked-amazing-presentation.png")], [sg.Text("Great Job! All Five Stars!")],[sg.Button("Continue")], [sg.Button("Return")]])
-                            all_ratings.append(4)
+                            all_ratings.append(5)
                     if ketchup_style == 1:
                         if mustardRequired == True and mustard_style == 0 or ketchupRequired == True and ketchup_style == 0:
                             room.close()
